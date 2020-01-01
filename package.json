@@ -1,0 +1,73 @@
+{
+  "name": "@eggproject/cypress-xhr-recorder",
+  "version": "0.0.1",
+  "description": "Cypress xhr recorder and player",
+  "main": "dist",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": "=10.16.3"
+  },
+  "files": [
+    "dist/",
+    "src/",
+    "package-lock.json",
+    "README.md"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "scripts": {
+    "dev": "tsc --declarationMap -w",
+    "prepublish": "tsc --declarationMap",
+    "cypress:open": "npm run prepublish && cypress open --project ./playground",
+    "cypress:run": "npm run prepublish && cypress run --project ./playground"
+  },
+  "author": "eggp",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abramenal/cypress-file-upload.git"
+  },
+  "keywords": [
+    "cypress",
+    "command",
+    "xhr",
+    "record",
+    "play"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/abramenal/cypress-file-upload/issues"
+  },
+  "homepage": "https://github.com/abramenal/cypress-file-upload#readme",
+  "peerDependencies": {
+    "cypress": "^3.0.0"
+  },
+  "devDependencies": {
+    "@cypress/webpack-preprocessor": "^4.1.1",
+    "@types/express": "^4.17.2",
+    "@types/node": "^12.12.21",
+    "cypress": "^3.8.0",
+    "husky": "^1.2.0",
+    "lint-staged": "^8.1.0",
+    "ntl": "^5.0.0",
+    "prettier": "^1.15.3",
+    "rxjs": "^6.5.3",
+    "serve": "^11.2.0",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.2.2",
+    "webpack": "^4.41.4"
+  },
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "express": "^4.17.1",
+    "express-http-proxy": "^1.6.0"
+  }
+}

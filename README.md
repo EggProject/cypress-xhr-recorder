@@ -1,0 +1,2 @@
+- debug kapcsolo a console loghoz!
+- PORT-ot kirakni env beallitasba!
