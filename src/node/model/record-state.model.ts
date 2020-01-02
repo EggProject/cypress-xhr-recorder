@@ -1,4 +1,4 @@
-export interface StateModel {
+export interface RecordStateModel {
   runAppServer: boolean;
   runProxyServer: boolean;
   /**

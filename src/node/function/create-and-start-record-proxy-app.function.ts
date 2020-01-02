@@ -1,11 +1,11 @@
-import {StateModel} from '../model/state.model';
+import {RecordStateModel} from '../model/record-state.model';
 import chalk from 'chalk';
 import express from 'express';
 
 const proxy = require('express-http-proxy');
 
 export function createAndStartRecordProxyApp(
-  state: StateModel,
+  state: RecordStateModel,
   listenHost = '127.0.0.1',
   listenPort = 8000,
   forwardHost = '127.0.0.1',

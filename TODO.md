@@ -11,3 +11,7 @@
   })
 - npm csomag kialakitas
 - semver
+- commanderjs
+- double start record when first start test
+- exception return handle
+- environment beallitasi lehetoseg

@@ -1,11 +1,15 @@
-import {StateModel} from '../model/state.model';
+import {RecordStateModel} from '../model/record-state.model';
 import express, {Request, Response} from 'express';
 import chalk from 'chalk';
 import * as fs from 'fs';
 
-export function createAndStartRecordControllerApp(state: StateModel, host = '127.0.0.1', port = 9001) {
+export function createAndStartRecordControllerApp(state: RecordStateModel, host = '127.0.0.1', port = 9001) {
   const userDir = process.cwd();
   const controllerApp = express();
+
+  // start-server-and-test miatt kell
+  // @ts-ignore
+  controllerApp.get('/', (req, res) => res.status(200).send())
 
   // @ts-ignore
   controllerApp.post('/start-record', (req: Request, res: Response) => {

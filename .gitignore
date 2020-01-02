@@ -5,6 +5,7 @@
 
 # remove cypress test created files
 playground/cypress/fixtures/record
+playground/cypress/videos
 
 # User-specific stuff
 .idea/**/workspace.xml

@@ -30,16 +30,23 @@
     "cypress:playground:open": "npm run prepublish && cypress open --project ./playground",
     "cypress:playground:run": "npm run prepublish && cypress run --project ./playground",
     "test:backend:start": "node test/test-backend.js",
-    "test:frontend:start": "http-server test -p 4200",
+    "test:record:frontend:start": "http-server test -p 4200",
     "record:start": "node dist/node/record.js",
-    "cypress:playground:open:frontend-start": "start-test test:frontend:start http://localhost:4200 test:backend:start",
-    "cypress:playground:open:backend-start": "start-test cypress:playground:open:frontend-start http://localhost:8000 record:start",
-    "cypress:playground:open:start": "start-test cypress:playground:open:backend-start http://localhost:9000 cypress:playground:open"
+    "prerecord:start": "npm run prepublish",
+    "play:start": "node dist/node/play.js",
+    "preplay:start": "npm run prepublish",
+    "cypress:playground:record:frontend:start": "start-test test:record:frontend:start http://localhost:4200 test:backend:start",
+    "cypress:playground:record:backend:start": "start-test cypress:playground:record:frontend:start http://localhost:8000 record:start",
+    "cypress:playground:play:backend:start": "start-test test:record:frontend:start http://localhost:4200 play:start",
+    "cypress:playground:record:open:start": "start-test cypress:playground:record:backend:start http://localhost:9000 cypress:playground:open",
+    "cypress:playground:record:shell:start": "start-test cypress:playground:record:backend:start http://localhost:9000 cypress:playground:run",
+    "cypress:playground:play:open:start": "start-test cypress:playground:play:backend:start http://localhost:8000/__wait cypress:playground:open",
+    "cypress:playground:play:shell:start": "start-test cypress:playground:play:backend:start http://localhost:8000/__wait cypress:playground:run"
   },
   "author": "eggp",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/abramenal/cypress-file-upload.git"
+    "url": "git+https://github.com/EggProject/cypress-xhr-recorder.git"
   },
   "keywords": [
     "cypress",
@@ -50,9 +57,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/abramenal/cypress-file-upload/issues"
+    "url": "https://github.com/EggProject/cypress-xhr-recorder/issues"
   },
-  "homepage": "https://github.com/abramenal/cypress-file-upload#readme",
+  "homepage": "https://github.com/EggProject/cypress-xhr-recorder#readme",
   "peerDependencies": {
     "cypress": "^3.0.0"
   },
@@ -77,6 +84,7 @@
   "dependencies": {
     "chalk": "^3.0.0",
     "express": "^4.17.1",
-    "express-http-proxy": "^1.6.0"
+    "express-http-proxy": "^1.6.0",
+    "load-json-file": "^6.2.0"
   }
 }
