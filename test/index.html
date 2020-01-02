@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Test mode</title>
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function() {
+        const baseUrl = 'http://localhost:9000/';
+        const commonClick = function(endpointName) {
+          return function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            var http = new XMLHttpRequest();
+            http.open('POST', baseUrl + endpointName);
+            http.onreadystatechange = function() {
+              if (http.readyState === 4 && http.status === 200) {
+              }
+            };
+            http.send();
+          };
+        };
+
+        document.getElementById('endpoint1').addEventListener('click', commonClick('test-endpoint1'));
+        document.getElementById('endpoint2').addEventListener('click', commonClick('test-endpoint2'));
+      });
+    </script>
+  </head>
+  <body>
+    <button id="endpoint1">Call endpoint1</button>
+    <button id="endpoint2">Call endpoint2</button>
+  </body>
+</html>

@@ -3,7 +3,7 @@ import express, {Request, Response} from 'express';
 import chalk from 'chalk';
 import * as fs from 'fs';
 
-export function createAndStartControllerApp(state: StateModel, host = '127.0.0.1', port = 9001) {
+export function createAndStartRecordControllerApp(state: StateModel, host = '127.0.0.1', port = 9001) {
   const userDir = process.cwd();
   const controllerApp = express();
 
@@ -23,15 +23,19 @@ export function createAndStartControllerApp(state: StateModel, host = '127.0.0.1
       throw new Error('Wrong params');
     }
 
-    const filePath = `${userDir}/apps/hu-frontend-e2e/src/fixtures/${directory}/${recordName}.json`;
+    const directoryPath = `${userDir}/${directory}`;
+    const filePath = `${directoryPath}/${recordName}.json`;
     if (fs.existsSync(filePath)) {
       fs.unlinkSync(filePath);
+    }
+    if (!fs.existsSync(directoryPath)) {
+      fs.mkdirSync(directoryPath);
     }
     fs.writeFileSync(filePath, JSON.stringify(state.queue));
 
     state.queue = {};
     state.runAppServer = false;
-    return res.send('FINISHED');
+    return res.json({ status: 'FINISHED', writeDirectory: directoryPath });
   });
 
   controllerApp.listen(9001, host);

@@ -86,11 +86,11 @@ export class XhrRecorderPlugin {
   }
 
   private stopRecord() {
-    // azert kell az idozito mert van hogy a teszt leallt a felulet meg egy folyamatban van es igy van idejuk befutni a maradek xhr-nek
     // TODO wait eltavolitasa
     // TODO hibakezeles
     return new Cypress.Promise(resolve =>
       cy
+        // azert kell az idozito mert van hogy a teszt leallt a felulet meg egy folyamatban van es igy van idejuk befutni a maradek xhr-nek
         .wait(2000)
         .request({
           method: 'POST',
@@ -98,7 +98,7 @@ export class XhrRecorderPlugin {
         })
         .then(response => {
           delete this.runningOptions;
-          cy.log(response.body);
+          cy.log(`Write directory: ${response.body.writeDirectory}`);
           resolve(response);
         })
     );

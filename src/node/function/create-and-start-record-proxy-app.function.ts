@@ -4,7 +4,7 @@ import express from 'express';
 
 const proxy = require('express-http-proxy');
 
-export function createAndStartProxyApp(
+export function createAndStartRecordProxyApp(
   state: StateModel,
   listenHost = '127.0.0.1',
   listenPort = 8000,

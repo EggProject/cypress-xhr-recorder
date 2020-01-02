@@ -27,8 +27,14 @@
   "scripts": {
     "dev": "tsc --declarationMap -w",
     "prepublish": "tsc --declarationMap",
-    "cypress:open": "npm run prepublish && cypress open --project ./playground",
-    "cypress:run": "npm run prepublish && cypress run --project ./playground"
+    "cypress:playground:open": "npm run prepublish && cypress open --project ./playground",
+    "cypress:playground:run": "npm run prepublish && cypress run --project ./playground",
+    "test:backend:start": "node test/test-backend.js",
+    "test:frontend:start": "http-server test -p 4200",
+    "record:start": "node dist/node/record.js",
+    "cypress:playground:open:frontend-start": "start-test test:frontend:start http://localhost:4200 test:backend:start",
+    "cypress:playground:open:backend-start": "start-test cypress:playground:open:frontend-start http://localhost:8000 record:start",
+    "cypress:playground:open:start": "start-test cypress:playground:open:backend-start http://localhost:9000 cypress:playground:open"
   },
   "author": "eggp",
   "repository": {
@@ -54,13 +60,16 @@
     "@cypress/webpack-preprocessor": "^4.1.1",
     "@types/express": "^4.17.2",
     "@types/node": "^12.12.21",
+    "cors": "^2.8.5",
     "cypress": "^3.8.0",
+    "http-server": "^0.12.0",
     "husky": "^1.2.0",
     "lint-staged": "^8.1.0",
     "ntl": "^5.0.0",
     "prettier": "^1.15.3",
     "rxjs": "^6.5.3",
     "serve": "^11.2.0",
+    "start-server-and-test": "^1.10.6",
     "ts-loader": "^6.2.1",
     "typescript": "^3.2.2",
     "webpack": "^4.41.4"

@@ -9,3 +9,5 @@
   runProxyServer: false,
   queue: {}
   })
+- npm csomag kialakitas
+- semver
