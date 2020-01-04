@@ -1,6 +1,6 @@
 {
   "name": "@eggproject/cypress-xhr-recorder",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Cypress xhr recorder and player",
   "main": "dist",
   "types": "dist/index.d.ts",
