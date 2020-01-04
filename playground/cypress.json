@@ -1,1 +1,7 @@
-{}
+{
+  "env": {
+    "xhr_recorder_recordMode": false,
+    "xhr_recorder_recordServerUrl": "",
+    "xhr_recorder_playServerUrl": ""
+  }
+}

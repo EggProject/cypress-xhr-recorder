@@ -1,10 +1,13 @@
 import { xhrRecorderStart } from '../../../dist/function/xhr-recorder-start.function';
+import { xhrRecorderPlugin } from '../../../dist/index';
 
 describe('Test record mode', () => {
   before(() => {
     // Delete recorded files
-    cy.writeFile('cypress/fixtures/record/one-request.json', '');
-    cy.writeFile('cypress/fixtures/record/to-many-request.json', '');
+    if (xhrRecorderPlugin.env.recordMode === true) {
+      cy.writeFile('cypress/fixtures/record/one-request.json', '');
+      cy.writeFile('cypress/fixtures/record/to-many-request.json', '');
+    }
   });
 
   context('One request', () => {
@@ -14,7 +17,7 @@ describe('Test record mode', () => {
 
     it('Call endpoint1', () => {
       cy.get('#endpoint1').click();
-      cy.xhrRecorderStop();
+      cy.wait(1000).xhrRecorderStop();
     });
 
     it('Test saved file', () => {
@@ -40,7 +43,7 @@ describe('Test record mode', () => {
 
     it('Call endpoint2', () => {
       cy.get('#endpoint2').click();
-      cy.xhrRecorderStop();
+      cy.wait(1000).xhrRecorderStop();
     });
 
     it('Test saved file', () => {

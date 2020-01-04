@@ -27,8 +27,10 @@
   "scripts": {
     "dev": "tsc --declarationMap -w",
     "prepublish": "tsc --declarationMap",
-    "cypress:playground:open": "npm run prepublish && cypress open --project ./playground",
-    "cypress:playground:run": "npm run prepublish && cypress run --project ./playground",
+    "cypress:playground:record:open": "npm run prepublish && cypress open --project ./playground --env xhr_recorder_recordMode=true",
+    "cypress:playground:record:run": "npm run prepublish && cypress run --project ./playground --env xhr_recorder_recordMode=true",
+    "cypress:playground:play:open": "npm run prepublish && cypress open --project ./playground --env xhr_recorder_recordMode=false",
+    "cypress:playground:play:run": "npm run prepublish && cypress run --project ./playground --env xhr_recorder_recordMode=false",
     "test:backend:start": "node test/test-backend.js",
     "test:record:frontend:start": "http-server test -p 4200",
     "record:start": "node dist/node/record.js",
@@ -38,10 +40,11 @@
     "cypress:playground:record:frontend:start": "start-test test:record:frontend:start http://localhost:4200 test:backend:start",
     "cypress:playground:record:backend:start": "start-test cypress:playground:record:frontend:start http://localhost:8000 record:start",
     "cypress:playground:play:backend:start": "start-test test:record:frontend:start http://localhost:4200 play:start",
-    "cypress:playground:record:open:start": "start-test cypress:playground:record:backend:start http://localhost:9000 cypress:playground:open",
-    "cypress:playground:record:shell:start": "start-test cypress:playground:record:backend:start http://localhost:9000 cypress:playground:run",
-    "cypress:playground:play:open:start": "start-test cypress:playground:play:backend:start http://localhost:8000/__wait cypress:playground:open",
-    "cypress:playground:play:shell:start": "start-test cypress:playground:play:backend:start http://localhost:8000/__wait cypress:playground:run"
+    "cypress:playground:record:open:start": "start-test cypress:playground:record:backend:start http://localhost:9000 cypress:playground:record:open",
+    "cypress:playground:record:shell:start": "start-test cypress:playground:record:backend:start http://localhost:9000 cypress:playground:record:run",
+    "cypress:playground:play:open:start": "start-test cypress:playground:play:backend:start http://localhost:9000/__wait cypress:playground:play:open",
+    "cypress:playground:play:shell:start": "start-test cypress:playground:play:backend:start http://localhost:9000/__wait cypress:playground:play:run",
+    "test": "npm run cypress:playground:record:shell:start && npm run cypress:playground:play:shell:start"
   },
   "author": "eggp",
   "repository": {
@@ -82,6 +85,9 @@
     "webpack": "^4.41.4"
   },
   "dependencies": {
+    "@angular/cdk": "^8.2.3",
+    "@angular/core": "^8.2.14",
+    "body-parser": "^1.19.0",
     "chalk": "^3.0.0",
     "express": "^4.17.1",
     "express-http-proxy": "^1.6.0",

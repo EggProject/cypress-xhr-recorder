@@ -2,10 +2,11 @@ import express, {Request, Response} from 'express';
 import chalk from 'chalk';
 import {PlayTestConfig} from '../model/play-test-config';
 import {XhrStoreService} from "../service/xhr-store.service";
+import bodyParser from "body-parser";
 
 export function createAndStartPlayControllerApp(xhrStoreService: XhrStoreService, host = '127.0.0.1', port = 9001) {
   const controllerApp = express();
-
+  controllerApp.use(bodyParser.json());
   // start-server-and-test miatt kell
   // @ts-ignore
   controllerApp.get('/', (req, res) => res.status(200).send());

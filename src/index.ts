@@ -20,9 +20,8 @@ import {isNil} from './type-guard/is-nil';
 //   return cy.wrap(plugin);
 // }
 
-let xhrRecorderPlugin: XhrRecorderPlugin;
+export const xhrRecorderPlugin = new XhrRecorderPlugin();
 export function start(name: string, directory?: string): void {
-  xhrRecorderPlugin = new XhrRecorderPlugin();
   xhrRecorderPlugin.start(name, directory);
 }
 

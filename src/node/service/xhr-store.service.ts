@@ -8,10 +8,9 @@ import {NotFoundNextStepResponseException} from './exception/not-found-next-step
 export class XhrStoreService {
   store!: { [url: string]: XhrResponse[] };
   private iteratorStep!: { [key: string]: number };
-  private fixtureDirPath = process.env.FIXTURE_DIR_PATH;
 
-  async loadFile({ name }: PlayTestConfig): Promise<string> {
-    const path = `${this.fixtureDirPath}/${name}.json`;
+  async loadFile({ name, directory }: PlayTestConfig): Promise<string> {
+    const path = `${directory}/${name}.json`;
     try {
       this.resetStore();
       this.store = await loadJsonFile(path);

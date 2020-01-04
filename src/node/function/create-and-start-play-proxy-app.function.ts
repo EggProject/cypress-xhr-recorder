@@ -4,7 +4,7 @@ import {XhrStoreService} from '../service/xhr-store.service';
 import {XhrResponse} from '../service/model/xhr.response';
 import {JsonParseErrorException} from '../service/exception/json-parse-error.exception';
 
-export function createAndStartPlayProxyApp(xhrStoreService: XhrStoreService, listenHost = '127.0.0.1', listenPort = 8000) {
+export function createAndStartPlayProxyApp(xhrStoreService: XhrStoreService, listenHost = '127.0.0.1', listenPort = 9000) {
   const proxyApp = express();
 
   proxyApp.all('*', (req, res) => {
@@ -12,12 +12,12 @@ export function createAndStartPlayProxyApp(xhrStoreService: XhrStoreService, lis
       // start-server-and-test miatt kell
       return res.status(200).send();
     }
-    console.log('[Mock] get request: ', req.baseUrl);
-    console.log('Search: ', req.url);
+    console.log(chalk.cyan('[Mock] get request: '), req.baseUrl);
+    console.log(chalk.cyan('Search: '), req.url);
 
     const nextResponse: XhrResponse = xhrStoreService.getNextStepResponse(req.originalUrl);
-    console.log('Get request mock:', req.originalUrl);
-    console.log('Found next mock url:', nextResponse.url);
+    console.log(chalk.green('Get request mock: '), req.originalUrl);
+    console.log(chalk.green('Found next mock url: '), nextResponse.url);
     if (nextResponse === undefined || nextResponse === null) {
       console.log('Not found url in store:', req.originalUrl);
     }

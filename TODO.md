@@ -16,3 +16,4 @@
 - exception return handle
 - environment beallitasi lehetoseg
 - CircleCI?
+- doc generator
