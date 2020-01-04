@@ -1,24 +1,7 @@
 /// <reference types="cypress" />
 
 import {XhrRecorderPlugin} from './xhr-recorder.class';
-// import "typing";
 import {isNil} from './type-guard/is-nil';
-
-// export default function initXhrRecorderPlugin(
-//   name: string,
-//   directory?: string
-// ): Chainable<any> {
-//   if (name === undefined || name === null || name.length === 0) {
-//     throw new Error("[XHR Recorder plugin] Init command not found name!");
-//   }
-//   const plugin = new XhrRecorderPlugin();
-//
-//   if (directory !== undefined && directory !== null) {
-//     plugin.directory = directory;
-//   }
-//   plugin.name = name;
-//   return cy.wrap(plugin);
-// }
 
 export const xhrRecorderPlugin = new XhrRecorderPlugin();
 export function start(name: string, directory?: string): void {

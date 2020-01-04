@@ -17,3 +17,4 @@
 - environment beallitasi lehetoseg
 - CircleCI?
 - doc generator
+- npm publish
