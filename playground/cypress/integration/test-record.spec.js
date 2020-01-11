@@ -1,9 +1,11 @@
 import { getRecordKeyFromRequest, xhrRecorderStart } from '../../../dist/index';
 
+let xhrRecorderInstance;
 describe('Test record mode', () => {
   before(() => {
     // Delete recorded files
-    cy.xhrRecorderGetXhrRecorderInstance().then(xhrRecorderInstance => {
+    cy.xhrRecorderGetXhrRecorderInstance().then(_xhrRecorderInstance => {
+      xhrRecorderInstance = _xhrRecorderInstance;
       if (xhrRecorderInstance.env.recordMode === true) {
         cy.writeFile('cypress/fixtures/record/one-request.json', '');
         cy.writeFile('cypress/fixtures/record/to-many-request.json', '');
@@ -74,7 +76,21 @@ describe('Test record mode', () => {
 
     it('Call endpoint2', () => {
       cy.xhrRecorderDisableNextRecord();
+
+      if (xhrRecorderInstance.env.recordMode === false) {
+        // play modban, mi nem inditjuk el a backend-et ezert figyelni kell az url
+        cy.server();
+        cy.route({ method: 'POST', url: 'test-endpoint2' }).as('callEndpoint2');
+      }
+
       cy.get('#endpoint2').click();
+
+      if (xhrRecorderInstance.env.recordMode === false) {
+        // megvizsgaljuk hogy 404-e
+        cy.wait('@callEndpoint2').then(xhr => {
+          expect(xhr.aborted).is.true;
+        });
+      }
       cy.wait(1000).xhrRecorderStop();
     });
 

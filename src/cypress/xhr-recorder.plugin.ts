@@ -95,7 +95,6 @@ export class XhrRecorderPlugin {
   }
 
   get env(): EnvironmentModel {
-    debugger
     return this._env;
   }
 
