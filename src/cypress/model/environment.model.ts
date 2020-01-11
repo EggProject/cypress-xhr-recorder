@@ -1,9 +1,14 @@
-import {isNil} from '../type-guard/is-nil';
-import {isBoolean} from '../type-guard/is-boolean';
+import {isNil} from '../../type-guard/is-nil';
+import {isBoolean} from '../../type-guard/is-boolean';
 import {coerceBooleanProperty} from '@angular/cdk/coercion';
 import {EnvironmentInterface} from './environment.interface';
-import {isString} from '../type-guard/is-string';
+import {isString} from '../../type-guard/is-string';
 
+/**
+ * hu: kornyezet kezeleset feleloss
+ *
+ * en: handle plugin environment
+ */
 export class EnvironmentModel implements EnvironmentInterface {
   readonly playMode: boolean;
   readonly recordMode!: boolean;

@@ -1,3 +1,6 @@
+/**
+ *
+ */
 export interface XhrResponse {
     url: string;
     statusCode: number;

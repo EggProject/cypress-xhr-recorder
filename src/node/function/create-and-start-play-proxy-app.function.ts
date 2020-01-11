@@ -6,15 +6,35 @@ import {JsonParseErrorException} from '../service/exception/json-parse-error.exc
 import {isNil} from '../../type-guard/is-nil';
 import {isNumeric} from '../../type-guard/is-numeric';
 import {getRecordKeyFromRequest} from '../helper/get-record-key-from-request.function';
+import {PlayStateModel} from '../model/play-state.model';
 
-export function createAndStartPlayProxyApp(xhrStoreService: XhrStoreService, listenHost = '127.0.0.1', listenPort = 9000) {
+/**
+ *
+ * @param state
+ * @param xhrStoreService
+ * @param listenHost
+ * @param listenPort
+ */
+export function createAndStartPlayProxyApp(
+  state: PlayStateModel,
+  xhrStoreService: XhrStoreService,
+  listenHost = '127.0.0.1',
+  listenPort = 9000
+) {
   const proxyApp = express();
 
-  proxyApp.all('*', (req, res) => {
+  proxyApp.all('*', (req, res, next) => {
     if (req.url === '/__wait') {
       // start-server-and-test miatt kell
       return res.status(200).send();
     }
+
+    // check disable next record
+    if (state.disableNextRecord) {
+      state.disableNextRecord = false;
+      return next();
+    }
+
     console.log(chalk.cyan('[Mock] get request: '), req.baseUrl);
     console.log(chalk.cyan('Search: '), `[${req.method}]${req.url}`);
 

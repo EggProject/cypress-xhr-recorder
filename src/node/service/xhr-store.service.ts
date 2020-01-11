@@ -5,6 +5,9 @@ import {NotFoundFileException} from './exception/not-found-file.exception';
 import {NotInitedXhrStoreException} from './exception/not-inited-xhr-store.exception';
 import {NotFoundNextStepResponseException} from './exception/not-found-next-step-response.exception';
 
+/**
+ *
+ */
 export class XhrStoreService {
   store!: { [url: string]: XhrResponse[] };
   private iteratorStep!: { [key: string]: number };

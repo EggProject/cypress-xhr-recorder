@@ -1,5 +1,8 @@
 import {EnvironmentModel} from './model/environment.model';
 
+/**
+ *
+ */
 export class XhrRecorderPlugin {
   // static readonly createRouteWatcherParamDefaultAsName = "xhrResponse";
   // static readonly waitKeyCreateRouteWatcherParamDefaultAsName = "@xhrResponse";
@@ -92,6 +95,14 @@ export class XhrRecorderPlugin {
   }
 
   get env(): EnvironmentModel {
+    debugger
     return this._env;
+  }
+
+  disableNextRecord() {
+    cy.request({
+      method: 'POST',
+      url: `${this._env.recordServerUrl}/disable-next-record`
+    }).then(() => cy.log(`Disable next request record`));
   }
 }

@@ -1,8 +1,12 @@
-/// <reference types="cypress" />
+import {XhrRecorderPlugin} from './cypress/xhr-recorder.plugin';
 
-declare namespace Cypress {
-  interface Chainable<Subject> {
-    xhrRecorderStart(name: string, directory?: string): void;
-    xhrRecorderStop(): void;
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      xhrRecorderStart: (name: string, directory?: string) => void;
+      xhrRecorderStop: () => void;
+      xhrRecorderDisableNextRecord: () => void;
+      xhrRecorderGetXhrRecorderInstance: () => Chainable<XhrRecorderPlugin>;
+    }
   }
 }
