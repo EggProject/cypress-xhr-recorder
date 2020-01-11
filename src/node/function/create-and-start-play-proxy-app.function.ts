@@ -3,6 +3,9 @@ import express from 'express';
 import {XhrStoreService} from '../service/xhr-store.service';
 import {XhrResponse} from '../service/model/xhr.response';
 import {JsonParseErrorException} from '../service/exception/json-parse-error.exception';
+import {isNil} from '../../type-guard/is-nil';
+import {isNumeric} from '../../type-guard/is-numeric';
+import {getRecordKeyFromRequest} from '../helper/get-record-key-from-request.function';
 
 export function createAndStartPlayProxyApp(xhrStoreService: XhrStoreService, listenHost = '127.0.0.1', listenPort = 9000) {
   const proxyApp = express();
@@ -13,12 +16,12 @@ export function createAndStartPlayProxyApp(xhrStoreService: XhrStoreService, lis
       return res.status(200).send();
     }
     console.log(chalk.cyan('[Mock] get request: '), req.baseUrl);
-    console.log(chalk.cyan('Search: '), req.url);
+    console.log(chalk.cyan('Search: '), `[${req.method}]${req.url}`);
 
-    const nextResponse: XhrResponse = xhrStoreService.getNextStepResponse(req.originalUrl);
+    const nextResponse: XhrResponse = xhrStoreService.getNextStepResponse(getRecordKeyFromRequest(req));
     console.log(chalk.green('Get request mock: '), req.originalUrl);
     console.log(chalk.green('Found next mock url: '), nextResponse.url);
-    if (nextResponse === undefined || nextResponse === null) {
+    if (isNil(nextResponse)) {
       console.log('Not found url in store:', req.originalUrl);
     }
     if (nextResponse.headers !== undefined) {
@@ -26,7 +29,7 @@ export function createAndStartPlayProxyApp(xhrStoreService: XhrStoreService, lis
     }
 
     res = res.status(
-      nextResponse.statusCode !== undefined && nextResponse.statusCode !== null && typeof nextResponse.statusCode === 'number'
+      nextResponse.statusCode !== undefined && nextResponse.statusCode !== null && isNumeric(nextResponse.statusCode)
         ? nextResponse.statusCode
         : 200
     );

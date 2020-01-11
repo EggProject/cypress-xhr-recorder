@@ -1,6 +1,7 @@
 import {RecordStateModel} from '../model/record-state.model';
 import chalk from 'chalk';
 import express from 'express';
+import {getRecordKeyFromRequest} from "../helper/get-record-key-from-request.function";
 
 const proxy = require('express-http-proxy');
 
@@ -16,15 +17,18 @@ export function createAndStartRecordProxyApp(
   proxyApp.use(
     '/',
     proxy(`${listenHost}:${listenPort}`, {
-      userResDecorator: function(proxyRes: any, proxyResData: any, userReq: { url: string }) {
+      userResDecorator: function(proxyRes: any, proxyResData: any, userReq: { url: string; method: string }) {
         if (userReq.url.indexOf('/start-record') === -1 && userReq.url.indexOf('/stop-record') === -1) {
-          console.log(chalk.cyan(`proxy url: ${userReq.url}`));
+          const recordKey = getRecordKeyFromRequest(userReq);
+          console.log(chalk.cyan(`proxy url: ${recordKey}`));
 
           const body = proxyResData.toString('utf8');
-          if (!Array.isArray(state.queue[userReq.url])) {
-            state.queue[userReq.url] = [];
+          if (!Array.isArray(state.queue[recordKey])) {
+            // if not exist, create init array
+            state.queue[recordKey] = [];
           }
-          state.queue[userReq.url].push({
+          state.queue[recordKey].push({
+            method: userReq.method,
             url: userReq.url,
             headers: { ...proxyRes.headers },
             statusCode: proxyRes.statusCode,

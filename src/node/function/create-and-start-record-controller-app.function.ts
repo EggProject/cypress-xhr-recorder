@@ -15,7 +15,6 @@ export function createAndStartRecordControllerApp(state: RecordStateModel, host 
   controllerApp.post('/start-record', (req: Request, res: Response) => {
     console.log(chalk.bgRed('START RECORD'));
     state.queue = {};
-    state.runAppServer = true;
     return res.send('STARTED');
   });
 
@@ -38,7 +37,6 @@ export function createAndStartRecordControllerApp(state: RecordStateModel, host 
     fs.writeFileSync(filePath, JSON.stringify(state.queue));
 
     state.queue = {};
-    state.runAppServer = false;
     return res.json({ status: 'FINISHED', writeDirectory: directoryPath });
   });
 

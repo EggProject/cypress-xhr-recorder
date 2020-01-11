@@ -17,3 +17,9 @@ export function stop(): void {
 
 Cypress.Commands.add('xhrRecorderStart', { prevSubject: false }, start);
 Cypress.Commands.add('xhrRecorderStop', { prevSubject: false }, stop);
+
+// TODO refactor
+// re-export (ts barrel)
+export { getRecordKeyFromRequest } from './node/helper/get-record-key-from-request.function';
+export { xhrRecorderStart } from './function/xhr-recorder-start.function';
+export { xhrRecorderStop } from './function/xhr-recorder-stop.function';

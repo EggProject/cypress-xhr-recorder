@@ -1,5 +1,4 @@
-import { xhrRecorderStart } from '../../../dist/function/xhr-recorder-start.function';
-import { xhrRecorderPlugin } from '../../../dist/index';
+import { getRecordKeyFromRequest, xhrRecorderPlugin, xhrRecorderStart } from '../../../dist/index';
 
 describe('Test record mode', () => {
   before(() => {
@@ -24,7 +23,7 @@ describe('Test record mode', () => {
       cy.readFile('cypress/fixtures/record/one-request.json').then(file => {
         const keys = Object.keys(file);
         expect(keys.length).to.equal(1);
-        expect(keys[0]).to.equal('/test-endpoint1');
+        expect(keys[0]).to.equal(getRecordKeyFromRequest({ method: 'POST', url: '/test-endpoint1' }));
         expect(Array.isArray(file[keys[0]])).to.equal(true);
         expect(file[keys[0]][0].url).to.equal('/test-endpoint1');
         expect(file[keys[0]][0].body).to.deep.equal({ 'test-endpoint1': true });
@@ -50,8 +49,8 @@ describe('Test record mode', () => {
       cy.readFile('cypress/fixtures/record/to-many-request.json').then(file => {
         const keys = Object.keys(file);
         expect(keys.length).to.equal(2);
-        expect(keys[0]).to.equal('/test-endpoint1');
-        expect(keys[1]).to.equal('/test-endpoint2');
+        expect(keys[0]).to.equal(getRecordKeyFromRequest({ method: 'POST', url: '/test-endpoint1' }));
+        expect(keys[1]).to.equal(getRecordKeyFromRequest({ method: 'POST', url: '/test-endpoint2' }));
         expect(Array.isArray(file[keys[0]])).to.equal(true);
         expect(file[keys[0]][0].url).to.equal('/test-endpoint1');
         expect(file[keys[1]][0].url).to.equal('/test-endpoint2');
