@@ -4,7 +4,10 @@ import {PlayTestConfig} from '../model/play-test-config';
 import {NotFoundFileException} from './exception/not-found-file.exception';
 import {NotInitedXhrStoreException} from './exception/not-inited-xhr-store.exception';
 import {NotFoundNextStepResponseException} from './exception/not-found-next-step-response.exception';
+import debug from 'debug';
+import {DEBUG_PREFIX} from "../../debug-prefix";
 
+const _debug = debug(`${DEBUG_PREFIX}play:controller:store`);
 /**
  *
  */
@@ -35,7 +38,7 @@ export class XhrStoreService {
     if (this.iteratorStep[url] === undefined) {
       this.iteratorStep[url] = -1;
     }
-    console.log('getNextStepResponse next step: ', this.iteratorStep[url] + 1);
+    _debug('getNextStepResponse next step: ', this.iteratorStep[url] + 1);
     if (this.store[url].length >= this.iteratorStep[url] + 1) {
       return this.store[url][++this.iteratorStep[url]];
     }

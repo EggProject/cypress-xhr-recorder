@@ -1,5 +1,6 @@
-- cypress playground test
-- debug kapcsolo a console loghoz!
++++- cypress playground test
++++- debug kapcsolo a console loghoz! (fo nevter: cxr:)
+
 - PORT-ot kirakni env beallitasba!
 - jest bekotese
 - parameterezhetoseg

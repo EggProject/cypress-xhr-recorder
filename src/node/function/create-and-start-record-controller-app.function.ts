@@ -1,9 +1,11 @@
 import {RecordStateModel} from '../model/record-state.model';
 import express, {Request, Response} from 'express';
-import chalk from 'chalk';
 import * as fs from 'fs';
 import {addDisableNextRecordRoute} from "../helper/add-disable-next-record-route.function";
+import debug from 'debug';
+import {DEBUG_PREFIX} from "../../debug-prefix";
 
+const _debug = debug(`${DEBUG_PREFIX}record:controller:app`);
 /**
  *
  * @param state
@@ -20,13 +22,13 @@ export function createAndStartRecordControllerApp(state: RecordStateModel, host 
 
   // @ts-ignore
   controllerApp.post('/start-record', (req: Request, res: Response) => {
-    console.log(chalk.bgRed('START RECORD'));
+    _debug('START RECORD');
     state.queue = {};
     return res.send('STARTED');
   });
 
   controllerApp.post('/finish-record', (req: Request, res: Response) => {
-    console.log(chalk.bgGreen(`FINISH RECORD: ${JSON.stringify(req.query)}`));
+    _debug(`FINISH RECORD: ${JSON.stringify(req.query)}`);
     const directory = req.query.directory;
     const recordName = req.query.record_name;
     if (typeof directory !== 'string' || typeof recordName !== 'string' || directory.length === 0 || recordName.length === 0) {
@@ -51,5 +53,5 @@ export function createAndStartRecordControllerApp(state: RecordStateModel, host 
   addDisableNextRecordRoute(controllerApp,state);
 
   controllerApp.listen(9001, host);
-  console.log(chalk.green(`Started record server controller app [http://${host}:${port}]`));
+  _debug(`Started record server controller app [http://${host}:${port}]`);
 }

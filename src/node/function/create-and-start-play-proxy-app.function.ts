@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import express from 'express';
 import {XhrStoreService} from '../service/xhr-store.service';
 import {XhrResponse} from '../service/model/xhr.response';
@@ -7,7 +6,10 @@ import {isNil} from '../../type-guard/is-nil';
 import {isNumeric} from '../../type-guard/is-numeric';
 import {getRecordKeyFromRequest} from '../helper/get-record-key-from-request.function';
 import {PlayStateModel} from '../model/play-state.model';
+import debug from 'debug';
+import {DEBUG_PREFIX} from "../../debug-prefix";
 
+const _debug = debug(`${DEBUG_PREFIX}play:proxy:app`);
 /**
  *
  * @param state
@@ -35,14 +37,14 @@ export function createAndStartPlayProxyApp(
       return next();
     }
 
-    console.log(chalk.cyan('[Mock] get request: '), req.baseUrl);
-    console.log(chalk.cyan('Search: '), `[${req.method}]${req.url}`);
+    _debug('[Mock] get request: ', req.baseUrl);
+    _debug('Search: ', `[${req.method}]${req.url}`);
 
     const nextResponse: XhrResponse = xhrStoreService.getNextStepResponse(getRecordKeyFromRequest(req));
-    console.log(chalk.green('Get request mock: '), req.originalUrl);
-    console.log(chalk.green('Found next mock url: '), nextResponse.url);
+    _debug('Get request mock: ', req.originalUrl);
+    _debug('Found next mock url: ', nextResponse.url);
     if (isNil(nextResponse)) {
-      console.log('Not found url in store:', req.originalUrl);
+      _debug('Not found url in store:', req.originalUrl);
     }
     if (nextResponse.headers !== undefined) {
       Object.entries(nextResponse.headers as { [key: string]: string }).forEach(entry => res.set(entry[0], entry[1]));
@@ -69,5 +71,5 @@ export function createAndStartPlayProxyApp(
   });
 
   proxyApp.listen(listenPort, listenHost);
-  console.log(chalk.green(`Started play server proxy app [http://${listenHost}:${listenPort}]`));
+  _debug(`Started play server proxy app [http://${listenHost}:${listenPort}]`);
 }
