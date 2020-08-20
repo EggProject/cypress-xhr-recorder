@@ -2,6 +2,7 @@
 
 import {XhrRecorderPlugin} from './cypress/xhr-recorder.plugin';
 import {isNil} from './type-guard/is-nil';
+import Chainable = Cypress.Chainable;
 
 const xhrRecorderPlugin = new XhrRecorderPlugin();
 
@@ -24,8 +25,11 @@ export function disableNextRecord() {
   xhrRecorderPlugin.disableNextRecord();
 }
 
-export function getXhrRecorderInstance() {
-  return xhrRecorderPlugin;
+export function getXhrRecorderInstance(): Chainable<XhrRecorderPlugin> {
+  /**
+   * Fix cast
+   */
+  return cy.wrap(xhrRecorderPlugin) as any as Chainable<XhrRecorderPlugin>;
 }
 // commands register
 Cypress.Commands.add('xhrRecorderStart', start);
