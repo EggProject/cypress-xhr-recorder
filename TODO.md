@@ -1,7 +1,7 @@
 +++- cypress playground test
 +++- debug kapcsolo a console loghoz! (fo nevter: cxr:)
 
-- PORT-ot kirakni env beallitasba!
+- PORT-ot kirakni env beallitasba! (use cypress environment variables flow)
 - jest bekotese
 - parameterezhetoseg
   +++- https://docs.cypress.io/guides/guides/continuous-integration.html#Boot-your-server
